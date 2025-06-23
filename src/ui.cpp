@@ -1,7 +1,6 @@
 #include <LilyGoLib.h>
 #include "watchface.h"
 #include "system.h"
-#include "apps.h"
 #include "settingPanel.h"
 
 lv_obj_t *tileview, *watchfaceTile, *systemTile, *appsTile;
@@ -16,9 +15,6 @@ void setupUi()
 
 	systemTile = lv_tileview_add_tile(tileview, 0, 1, LV_DIR_VER);
 	setupSystem();
-
-	appsTile = lv_tileview_add_tile(tileview, 1, 0, LV_DIR_HOR);
-	setupApps();
 
 	setupSettingPanel();
 }

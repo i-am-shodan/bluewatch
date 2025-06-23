@@ -1,6 +1,5 @@
 #include <LilyGoLib.h>
 #include "event.h"
-#include "setting.h"
 
 const uint32_t screenTimeout = 10000;
 bool disableSleep;
@@ -10,11 +9,9 @@ void setDisableSleep(bool value) {
 	if (!value)
 		lv_disp_trig_activity(NULL);
 	esp_event_post(BLUEWATCH_EVENTS, BLUEWATCH_EVENT_DISABLE_SLEEP_CHANGE, nullptr, 0, 0);
-	setting.set(".disableSleep", Json(disableSleep));
 }
 
 void setupSleep() {
-	setDisableSleep((bool)setting.get(".disableSleep"));
 }
 
 void sleepHandler() {

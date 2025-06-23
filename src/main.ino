@@ -3,9 +3,6 @@
 #include "ui.h"
 #include "sleep.h"
 #include "battery.h"
-#include "wifi_.h"
-#include "js.h"
-#include "webServer_.h"
 #include "watchface.h"
 
 const char *ntpServer1 = "pool.ntp.org";
@@ -22,21 +19,14 @@ void setup()
 	beginLvglHelper();
 	esp_event_loop_create_default();
 
-	void registerLvglFontDriver();
-	registerLvglFontDriver();
-
 	setupUi();
 	setupSleep();
 	setupBattery();
 
 	configTime(timezone * 3600, 0, ntpServer1, ntpServer2);
 
-	//setupWifi();
 	watch.configAccelerometer();
 	watch.enableAccelerometer();
-
-	//setupJs();
-	//setupWebServer();
 }
 
 void loop()
@@ -45,7 +35,6 @@ void loop()
 	sleepHandler();
 	batteryHandler();
 	watchfaceHandler();
-	//webServer.handleClient();
 
 	delay(5);
 }
