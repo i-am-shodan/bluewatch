@@ -6,6 +6,7 @@
 #include "wifi_.h"
 #include "js.h"
 #include "webServer_.h"
+#include "watchface.h"
 
 const char *ntpServer1 = "pool.ntp.org";
 const char *ntpServer2 = "time.nist.gov";
@@ -17,6 +18,7 @@ void setup()
 {
 	Serial.begin(115200);
 	watch.begin();
+
 	beginLvglHelper();
 	esp_event_loop_create_default();
 
@@ -29,12 +31,12 @@ void setup()
 
 	configTime(timezone * 3600, 0, ntpServer1, ntpServer2);
 
-	setupWifi();
+	//setupWifi();
 	watch.configAccelerometer();
 	watch.enableAccelerometer();
 
-	setupJs();
-	setupWebServer();
+	//setupJs();
+	//setupWebServer();
 }
 
 void loop()
@@ -43,7 +45,7 @@ void loop()
 	sleepHandler();
 	batteryHandler();
 	watchfaceHandler();
-	webServer.handleClient();
+	//webServer.handleClient();
 
 	delay(5);
 }

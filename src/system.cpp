@@ -1,7 +1,7 @@
 #include <LilyGoLib.h>
 #include "system.h"
 
-extern App wifiApp, batteryApp;
+extern App wifiApp, batteryApp, uakApp;
 
 extern lv_obj_t *systemTile;
 
@@ -17,6 +17,9 @@ void setupSystem()
 
 	auto batteryBtn = lv_list_add_btn(list, LV_SYMBOL_BATTERY_FULL, "Battery");
 	lv_obj_add_event_cb(batteryBtn, [](lv_event_t *e) { enterApp(&batteryApp); }, LV_EVENT_CLICKED, nullptr);
+
+	auto uakBtn = lv_list_add_btn(list, LV_SYMBOL_WARNING, "UAK");
+	lv_obj_add_event_cb(uakBtn, [](lv_event_t *e) { enterApp(&uakApp); }, LV_EVENT_CLICKED, nullptr);
 }
 
 extern lv_obj_t *tileview, *systemTile;
