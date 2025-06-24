@@ -5,10 +5,6 @@
 #include "battery.h"
 #include "watchface.h"
 
-const char *ntpServer1 = "pool.ntp.org";
-const char *ntpServer2 = "time.nist.gov";
-const int timezone = +8;
-
 SET_LOOP_TASK_STACK_SIZE(16 * 1024);	// Duktape compile may use up default (8K) stack space
 
 void setup()
@@ -22,8 +18,6 @@ void setup()
 	setupUi();
 	setupSleep();
 	setupBattery();
-
-	configTime(timezone * 3600, 0, ntpServer1, ntpServer2);
 
 	watch.configAccelerometer();
 	watch.enableAccelerometer();
