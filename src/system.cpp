@@ -1,22 +1,25 @@
 #include <LilyGoLib.h>
 #include "system.h"
 
-extern App batteryApp, uakApp;
+extern App batteryApp, uakApp, timeApp;
 
 extern lv_obj_t *systemTile;
 
 void setupSystem()
 {
-	auto list = lv_list_create(systemTile);
-	lv_obj_set_size(list, LV_PCT(100), LV_PCT(100));
+    auto list = lv_list_create(systemTile);
+    lv_obj_set_size(list, LV_PCT(100), LV_PCT(100));
 
-	void enterApp(App *app);
+    void enterApp(App *app);
 
-	auto batteryBtn = lv_list_add_btn(list, LV_SYMBOL_BATTERY_FULL, "Battery");
-	lv_obj_add_event_cb(batteryBtn, [](lv_event_t *e) { enterApp(&batteryApp); }, LV_EVENT_CLICKED, nullptr);
+    auto batteryBtn = lv_list_add_btn(list, LV_SYMBOL_BATTERY_FULL, "Battery");
+    lv_obj_add_event_cb(batteryBtn, [](lv_event_t *e) { enterApp(&batteryApp); }, LV_EVENT_CLICKED, nullptr);
 
-	auto uakBtn = lv_list_add_btn(list, LV_SYMBOL_WARNING, "UAK");
-	lv_obj_add_event_cb(uakBtn, [](lv_event_t *e) { enterApp(&uakApp); }, LV_EVENT_CLICKED, nullptr);
+    auto uakBtn = lv_list_add_btn(list, LV_SYMBOL_WARNING, "UAK");
+    lv_obj_add_event_cb(uakBtn, [](lv_event_t *e) { enterApp(&uakApp); }, LV_EVENT_CLICKED, nullptr);
+
+    auto timeBtn = lv_list_add_btn(list, LV_SYMBOL_SETTINGS, "Time");
+    lv_obj_add_event_cb(timeBtn, [](lv_event_t *e) { enterApp(&timeApp); }, LV_EVENT_CLICKED, nullptr);
 }
 
 extern lv_obj_t *tileview, *systemTile;
