@@ -15,6 +15,8 @@ void setupWatchface()
 {
 	extern lv_obj_t *watchfaceTile;
 	watchface = lv_obj_create(watchfaceTile);
+	lv_obj_set_style_bg_color(watchface, lv_color_black(), LV_PART_MAIN); // Set background to black
+	lv_obj_set_style_text_color(watchface, lv_color_white(), LV_PART_MAIN); // Set text to white
 	lv_obj_set_style_border_side(watchface, LV_BORDER_SIDE_NONE, LV_PART_MAIN);
 	lv_obj_set_style_radius(watchface, 0, LV_PART_MAIN);
 	lv_obj_set_size(watchface, LV_PCT(100), LV_PCT(100));
@@ -23,10 +25,12 @@ void setupWatchface()
 	timeLabel = lv_label_create(watchface);
 	lv_obj_center(timeLabel);
 	lv_obj_set_style_text_font(timeLabel, &lv_font_montserrat_48, LV_PART_MAIN);
+	lv_obj_set_style_text_color(timeLabel, lv_color_white(), LV_PART_MAIN); // Set text to white
 
 	dateLabel = lv_label_create(watchface);
 	lv_obj_align(dateLabel, LV_ALIGN_CENTER, 0, 48);
 	lv_obj_set_style_text_font(dateLabel, &lv_font_montserrat_24, LV_PART_MAIN);
+	lv_obj_set_style_text_color(dateLabel, lv_color_white(), LV_PART_MAIN); // Set text to white
 
 	statusBar = lv_obj_create(watchface);
 	lv_obj_set_width(statusBar, LV_PCT(100));
@@ -36,6 +40,8 @@ void setupWatchface()
 	lv_obj_set_flex_align(statusBar, LV_FLEX_ALIGN_END, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 	lv_obj_set_style_border_width(statusBar, 0, LV_PART_MAIN);
 	lv_obj_set_style_text_font(statusBar, &lv_font_montserrat_24, LV_PART_MAIN);
+	lv_obj_set_style_bg_color(statusBar, lv_color_black(), LV_PART_MAIN); // Set background to black
+	lv_obj_set_style_text_color(statusBar, lv_color_white(), LV_PART_MAIN); // Set text to white
 	chargeLabel = lv_label_create(statusBar);
 	lv_label_set_text(chargeLabel, LV_SYMBOL_CHARGE);
 	batteryLabel = lv_label_create(statusBar);

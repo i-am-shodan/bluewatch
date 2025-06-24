@@ -20,7 +20,7 @@ void setupSettingPanel() {
 	lv_obj_set_style_pad_all(settingPanel, 20, LV_PART_MAIN);
 	lv_obj_set_style_border_side(settingPanel, LV_BORDER_SIDE_NONE, LV_PART_MAIN);
 	lv_obj_set_style_radius(settingPanel, 0, LV_PART_MAIN);
-	lv_obj_set_style_bg_color(settingPanel, lv_color_hex(0x333333), LV_PART_MAIN);
+	lv_obj_set_style_bg_color(settingPanel, lv_color_black(), LV_PART_MAIN); // Set background to black
 	lv_obj_set_style_bg_opa(settingPanel, LV_OPA_70, LV_PART_MAIN);
 	lv_obj_set_pos(settingPanel, 0, -240 + stickOut);
 	lv_obj_set_style_opa(settingPanel, LV_OPA_0, LV_PART_MAIN);
@@ -61,18 +61,21 @@ void setupSettingPanel() {
 		lv_anim_start(&a);
 	}, LV_EVENT_RELEASED, nullptr);
 
-	lv_obj_set_style_text_color(settingPanel, lv_color_white(), LV_PART_MAIN);
+	lv_obj_set_style_text_color(settingPanel, lv_color_white(), LV_PART_MAIN); // Set text to white
 	lv_obj_set_flex_flow(settingPanel, LV_FLEX_FLOW_COLUMN);
 
 	static lv_style_t toggleBtnStyle;
 	lv_style_init(&toggleBtnStyle);
-	lv_style_set_bg_color(&toggleBtnStyle, lv_color_white());
-	lv_style_set_bg_opa(&toggleBtnStyle, LV_OPA_20);
+	lv_style_set_bg_color(&toggleBtnStyle, lv_color_black()); // Button background black
+	lv_style_set_bg_opa(&toggleBtnStyle, LV_OPA_60);
+	lv_style_set_text_color(&toggleBtnStyle, lv_color_white()); // Button text white
+
 	static lv_style_t toggleBtnCheckedStyle;
 	lv_style_init(&toggleBtnCheckedStyle);
 	auto colorPrimary = lv_theme_get_color_primary(nullptr);
 	lv_style_set_bg_color(&toggleBtnCheckedStyle, colorPrimary);
 	lv_style_set_bg_opa(&toggleBtnCheckedStyle, LV_OPA_100);
+	lv_style_set_text_color(&toggleBtnCheckedStyle, lv_color_white()); // Checked button text white
 
 	auto batteryBtn = lv_btn_create(settingPanel);
 	lv_obj_set_width(batteryBtn, LV_PCT(100));
