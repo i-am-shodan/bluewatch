@@ -1,3 +1,1 @@
-# Bluewatch
-
-Lilygo's official factory firmware for t-watch-s3 drains the battery fast and is poorly maintained, so I start my own.
+# Very basic watch with USB Army Knife firware swap support
