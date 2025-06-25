@@ -9,7 +9,6 @@ unsigned long timeLastUpdateTime;
 void updateTime();
 void updateBatteryStatus();
 void updateChargeStatus();
-void updateWifiStatus();
 
 void setupWatchface()
 {
@@ -45,18 +44,6 @@ void setupWatchface()
 	chargeLabel = lv_label_create(statusBar);
 	lv_label_set_text(chargeLabel, LV_SYMBOL_CHARGE);
 	batteryLabel = lv_label_create(statusBar);
-	wifiLabel = lv_label_create(statusBar);
-
-	WiFi.onEvent([](arduino_event_t *e) {
-		switch (e->event_id) {
-			case ARDUINO_EVENT_WIFI_STA_CONNECTED:
-			case ARDUINO_EVENT_WIFI_STA_DISCONNECTED:
-			case ARDUINO_EVENT_WIFI_STA_GOT_IP:
-			case ARDUINO_EVENT_WIFI_STA_GOT_IP6:
-			case ARDUINO_EVENT_WIFI_STA_LOST_IP:
-				updateWifiStatus();
-		}
-	});
 
 	auto now = millis();
 	updateTime();
@@ -78,7 +65,6 @@ void setupWatchface()
 	esp_event_handler_register(BLUEWATCH_EVENTS, BLUEWATCH_EVENT_BATTERY_CHARGE_START, [](void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
 		updateChargeStatus();
 	}, nullptr);
-	updateWifiStatus();
 }
 
 void watchfaceHandler()
@@ -93,15 +79,13 @@ void watchfaceHandler()
 
 void updateTime()
 {
-	tm timeinfo;
-	if (!getLocalTime(&timeinfo)) {
-		Serial.println("Failed to obtain time.");
-		return;
-	}
+	struct tm hwTimeinfo;
+	watch.getDateTime(&hwTimeinfo);
+
 	char s[16];
-	strftime(s, 16, "%X", &timeinfo);
+	strftime(s, 16, "%X", &hwTimeinfo);
 	lv_label_set_text(timeLabel, s);
-	strftime(s, 16, "%a %x", &timeinfo);
+	strftime(s, 16, "%a %x", &hwTimeinfo);
 	lv_label_set_text(dateLabel, s);
 }
 
@@ -120,9 +104,4 @@ void updateBatteryStatus()
 void updateChargeStatus()
 {
 	(watch.isCharging() ? lv_obj_clear_flag : lv_obj_add_flag)(chargeLabel, LV_OBJ_FLAG_HIDDEN);
-}
-
-void updateWifiStatus()
-{
-	lv_label_set_text(wifiLabel, WiFi.isConnected() ? LV_SYMBOL_WIFI : "");
 }

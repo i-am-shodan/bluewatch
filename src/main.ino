@@ -9,6 +9,8 @@ SET_LOOP_TASK_STACK_SIZE(16 * 1024);	// Duktape compile may use up default (8K) 
 
 void setup()
 {
+	setenv("TZ", "UTC", 1);
+
 	Serial.begin(115200);
 	watch.begin();
 
