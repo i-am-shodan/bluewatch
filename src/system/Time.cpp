@@ -5,15 +5,11 @@
 
 #define BUTTON_HEIGHT 45
 
-char buf[64];
-
 static int hourState = -1;
 static int minuteState = -1;
 
 // Helper function to set ESP32 time
 static void set_esp32_time() {
-
-    Serial.printf("in set_esp32_time %d %d\n", hourState, minuteState);
 
     if (hourState < 0 || hourState > 23 || minuteState < 0 || minuteState > 59) {
         Serial.println("Invalid time provided");
@@ -23,59 +19,26 @@ static void set_esp32_time() {
     struct tm timeinfo;
     // Get the time C library structure
     watch.getDateTime(&timeinfo);
-    auto written = strftime(buf, 64, "Before %A, %d. %B %Y %I:%M:%S %p\n", &timeinfo);
-    Serial.println(buf);
 
     timezone tz_utc = {0,0};
 
     struct tm t = {0};
-    t.tm_year = 2025 - 1900;
-    t.tm_mon = 5; // January (0-based)
-    t.tm_mday = 24; // 1st of the month
+    t.tm_year = timeinfo.tm_year;
+    t.tm_mon = timeinfo.tm_mon;
+    t.tm_mday = timeinfo.tm_mday;
     t.tm_hour = hourState;
     t.tm_min = minuteState;
     t.tm_sec = 0;
     time_t now = mktime(&t);
     struct timeval tv = { .tv_sec = now };
 
-    Serial.printf("Setting time to %02d:%02d\n", hourState, minuteState);
-
     settimeofday(&tv, &tz_utc);
-
-    time_t now2;
-    struct tm  info;
-    time(&now2);
-    localtime_r(&now2, &info);
-
-    written = strftime(buf, 64, "localtime_r %A, %d. %B %Y %I:%M:%S %p\n", &info);
-    Serial.println(buf);
-
-
-
-    Serial.println("Time set, writing to hardware clock");
-
     watch.hwClockWrite();
-
-    // Get the time C library structure
-    memset(&timeinfo, 0, sizeof(timeinfo));
-    watch.getDateTime(&timeinfo);
-    written = strftime(buf, 64, "After %A, %d. %B %Y %I:%M:%S %p\n", &timeinfo);
-    Serial.println(buf);
-
-    Serial.println("Hardware clock updated");
 }
 
 // OK button event handler
 static void ok_btn_event_handler(lv_event_t *e) {
-
-    Serial.println("in ok_btn_event_handler");
-    
-    Serial.printf("hourState:minuteState %d:%d\n", hourState, minuteState);
     set_esp32_time();
-
-    // Send LV_EVENT_SCROLL_END to the tile (parent of the dialog)
-    //lv_obj_t *tile = lv_obj_get_parent(dialog);
-    //lv_event_send(tile, LV_EVENT_SCROLL_END, nullptr);
 }
 
 class TimeApp : public App {

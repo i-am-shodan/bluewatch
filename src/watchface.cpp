@@ -85,7 +85,7 @@ void updateTime()
 	char s[16];
 	strftime(s, 16, "%X", &hwTimeinfo);
 	lv_label_set_text(timeLabel, s);
-	strftime(s, 16, "%a %x", &hwTimeinfo);
+	strftime(s, 16, "%a %d/%m/%y", &hwTimeinfo);
 	lv_label_set_text(dateLabel, s);
 }
 
